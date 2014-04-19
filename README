@@ -1,0 +1,7 @@
+- Instalation
+
+  1 -  git clone https://github.com/eduardodeoh/ansible-macbook
+
+  2 - cd ansible-macbook
+
+  3 - ansible-playbook playbook.yml -i hosts
