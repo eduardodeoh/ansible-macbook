@@ -56,7 +56,13 @@
       - shortcat 
       - xtrafinder
     
-    zsh_path: /usr/local/bin/zsh   
+    zsh_path: /usr/local/bin/zsh
+
+    home: "{{ lookup('env','HOME') }}"
+
+    install_oh_my_zsh:  false
+
+    install_prezto: true
 
   tasks:
 
@@ -134,3 +140,20 @@
     #  with_items:
     #    - mysql
     #    - elasticsearch
+    #
+
+    - name: Clone dotfiles
+      # I set force and update to no so that if I have any working changes or changes that I haven't pushed up it doesn't reset my local history.
+      git: repo=git@github.com:eduardodeoh/{{ item }}.git dest={{ home }}/{{ item }} force=no update=no
+      with_items:
+        - dotfiles
+
+    - name: Install oh-my-zsh
+      shell: "{{ home }}/dotfiles/zsh/oh-my-zsh/bootstrap-oh-my-zsh.sh"
+      when: install_oh_my_zsh == true
+      tags: install_oh_my_zsh
+
+    - name: Install Prezto (zsh)
+      shell: "{{ home }}/dotfiles/zsh/prezto/bootstrap-prezto.sh"
+      when: install_prezto == true
+      tags: install_prezto
