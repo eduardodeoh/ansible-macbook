@@ -77,6 +77,9 @@
     - name: Tap homebrew/dupes
       shell: brew tap homebrew/dupes
 
+    - name: Tap homebrew/binary
+      shell: brew tap homebrew/binary
+
     - name: Check homebrew-cask is installed
       stat: path=/usr/local/bin/brew-cask.rb
       register: brew_cask_installed
@@ -97,6 +100,8 @@
         - zsh
         - hub
         - rsync
+        - vagrant
+        - packer
 
     - name: Check for installed apps(casks)
       shell: brew cask list | grep {{ item }}
